@@ -12,6 +12,7 @@ const balance = document.getElementById(
   const form = document.getElementById("form");
   const text = document.getElementById("text");
   const amount = document.getElementById("amount");
+  const amount = document.getElementById("comment");
   // const dummyTransactions = [
   //   { id: 1, text: "Flower", amount: -20 },
   //   { id: 2, text: "Salary", amount: 300 },
@@ -36,6 +37,7 @@ const balance = document.getElementById(
       const transaction = {
         id:generateID(),
         text:text.value,
+        comment:comment.value,
         amount:+amount.value
       }
   
@@ -46,6 +48,7 @@ const balance = document.getElementById(
       updateLocalStorage();
       text.value='';
       amount.value='';
+      comment.value='';
     }
   }
   
@@ -71,7 +74,7 @@ const balance = document.getElementById(
     
     item.innerHTML = `
       ${transaction.text} <span>&#8377;${Math.abs(
-      transaction.amount
+      transaction.amount;${transaction.comment}
     )}</span>
       <button class="delete-btn" onclick="removeTransaction(${transaction.id})">delete</button>
       <button class="edit-btn" onclick="editTransaction(${transaction.id})">edit</button>
@@ -118,6 +121,7 @@ const balance = document.getElementById(
     trans = transactions.filter(transaction => transaction.id === id);
     text.value = trans[0].text;
     amount.value = trans[0].amount;
+    comment.value = trans[0].comment
     removeTransaction(id);
   }
   //last
