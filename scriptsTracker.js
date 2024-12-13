@@ -65,8 +65,8 @@ function addTransactionDOM(transaction) {
     <span>${sign}&#8377;${Math.abs(transaction.amount)}</span>
     <span class="created-at">Created: ${new Date(transaction.created_at).toLocaleString()}</span>
     <span class="updated-at">Updated: ${new Date(transaction.updated_at).toLocaleString()}</span>
-    <span class="comment">(Comment: ${transaction.comment})</span>
-    <button class="delete-btn" onclick="removeTransaction(${transaction.id})">Delete</button>
+    <span class="comment">Comment: ${transaction.comment}</span>
+    <button class="edit-btn" onclick="removeTransaction(${transaction.id})">Delete</button>
     <button class="edit-btn" onclick="editTransaction(${transaction.id})">Edit</button>
   `;
 
