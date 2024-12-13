@@ -1,3 +1,4 @@
+
 // Select DOM Elements
 const balance = document.getElementById("balance");
 const money_plus = document.getElementById("money-plus");
@@ -101,7 +102,7 @@ function editTransaction(id) {
     text.value = transactionToEdit.text;
     amount.value = transactionToEdit.amount;
     comment.value = transactionToEdit.comment || "";
-    removeTransaction(id); // Remove old entry so it can be updated
+    text.dataset.editId = id; // Store the ID for editing
   }
 }
 
@@ -122,21 +123,25 @@ form.addEventListener("submit", function (e) {
   e.preventDefault();
 
   const now = new Date();
-  const editedTransaction = transactions.find(
-    (transaction) => transaction.id === +text.dataset.editId
-  );
+  const editId = text.dataset.editId;
 
-  if (editedTransaction) {
-    editedTransaction.text = text.value;
-    editedTransaction.amount = +amount.value;
-    editedTransaction.comment = comment.value || "N/A";
-    editedTransaction.updated_at = now.toISOString();
-    updateLocalStorage();
-    Init();
-    text.removeAttribute("data-edit-id");
-    text.value = "";
-    amount.value = "";
-    comment.value = "";
+  if (editId) {
+    const editedTransaction = transactions.find(
+      (transaction) => transaction.id === +editId
+    );
+
+    if (editedTransaction) {
+      editedTransaction.text = text.value;
+      editedTransaction.amount = +amount.value;
+      editedTransaction.comment = comment.value || "N/A";
+      editedTransaction.updated_at = now.toISOString();
+      updateLocalStorage();
+      Init();
+      text.removeAttribute("data-edit-id");
+      text.value = "";
+      amount.value = "";
+      comment.value = "";
+    }
   } else {
     addTransaction(e);
   }
