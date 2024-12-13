@@ -1,52 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expense Tracker</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <h2>Expense Tracker</h2>
+    <title>History Management</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
     <div class="container">
-      <h4>Your Balance</h4>
-      <h1 id="balance">&#8377;0.00</h1>
-      <div class="inc-exp-container">
-        <div>
-          <h4>Income</h4>
-          <p id="money-plus" class="money-plus">
-            +&#8377;0.00
-          </p>
-        </div>
-        <div>
-          <h4>Expense</h4>
-          <p id="money-minus" class="money-minus">
-            -&#8377;0.00
-          </p>
-        </div>
-      </div>
-
-      <h3 style="color: rgb(78, 149, 92);">History</h3>
-      <ul id="list" class="list">
-        <li class="minus">
-          <button class="delete-btn">x</button>
-        </li>
-      </ul>
-      <h3 style="color: rgb(238, 19, 27);">Add New Transition</h3>
-      <form id="form">
-          <div class="form-control">
-              <label for="text">Expense/Income Name</label>
-              <input type="text" id="text" placeholder="Enter name"/>
-          </div>
-          <div class="form-control">
-              <label for="amount">Amount <br> (negative - expense ,positive - income )</label>
-              <input type="number" id="amount" placeholder="Enter amount"> 
-          </div>
-          <button class="btn">Submit</button>
-      </form>
+        <h1>Transition Management</h1>
+        
+        <!-- Add New Transition -->
+        <h2>Add New Transition</h2>
+        <form id="addTransitionForm" onsubmit="return addNewTransition()">
+            <div class="input-group">
+                <label for="transitionName">Transition Name:</label>
+                <input type="text" id="transitionName" required>
+            </div>
+            <div class="input-group">
+                <label for="comments">Comments (Optional):</label>
+                <input type="text" id="comments">
+            </div>
+            <button type="submit">Add Transition</button>
+        </form>
+        
+        <!-- History Table -->
+        <h2>History</h2>
+        <table id="historyTable" border="1">
+            <thead>
+                <tr>
+                    <th>Transition Name</th>
+                    <th>Comments</th>
+                    <th>Created At</th>
+                    <th>Updated At</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows will be dynamically added here -->
+            </tbody>
+        </table>
     </div>
 
-
-    <script src="scriptsTracker.js"></script>
-  </body>
+    <script src="script.js"></script>
+</body>
 </html>
