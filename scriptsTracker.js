@@ -22,11 +22,14 @@ function addTransaction(e) {
     return;
   }
 
+  const now = new Date();
   const transaction = {
     id: generateID(),
     text: text.value,
     comment: comment.value || "N/A", // Optional comment
     amount: +amount.value, // Convert to number
+    created_at: now.toISOString(),
+    updated_at: now.toISOString(),
   };
 
   transactions.push(transaction);
@@ -58,8 +61,11 @@ function addTransactionDOM(transaction) {
 
   // Set Inner HTML
   item.innerHTML = `
-    ${transaction.text} <span>${sign}&#8377;${Math.abs(transaction.amount)}</span> 
+    ${transaction.text} 
+    <span>${sign}&#8377;${Math.abs(transaction.amount)}</span>
     <span class="comment">(${transaction.comment})</span>
+    <span class="created-at">Created: ${new Date(transaction.created_at).toLocaleString()}</span>
+    <span class="updated-at">Updated: ${new Date(transaction.updated_at).toLocaleString()}</span>
     <button class="delete-btn" onclick="removeTransaction(${transaction.id})">Delete</button>
     <button class="edit-btn" onclick="editTransaction(${transaction.id})">Edit</button>
   `;
@@ -111,8 +117,30 @@ function Init() {
   updateValues();
 }
 
-// Event Listeners
-form.addEventListener("submit", addTransaction);
+// Update `updated_at` on Edit Submission
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const now = new Date();
+  const editedTransaction = transactions.find(
+    (transaction) => transaction.id === +text.dataset.editId
+  );
+
+  if (editedTransaction) {
+    editedTransaction.text = text.value;
+    editedTransaction.amount = +amount.value;
+    editedTransaction.comment = comment.value || "N/A";
+    editedTransaction.updated_at = now.toISOString();
+    updateLocalStorage();
+    Init();
+    text.removeAttribute("data-edit-id");
+    text.value = "";
+    amount.value = "";
+    comment.value = "";
+  } else {
+    addTransaction(e);
+  }
+});
 
 // Initialize
 Init();
